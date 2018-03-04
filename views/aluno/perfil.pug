@@ -1,0 +1,142 @@
+extends ../layout
+
+block content
+    
+    -function prettyDate(dateString){
+        -var date = new Date(dateString);
+        -var d = date.getDate();
+        -if(d<10){
+            -d = '0' + d
+        -}
+        -var m = date.getMonth()+1;
+        -if(m<10){
+            -m = '0' + m
+        -}
+        -var y = date.getFullYear();
+        -return d+'/'+ m +'/'+y;
+    -}
+    div(id="page-wrapper")
+        div(class="container-fluid")
+            div(class="row")#conteudo
+                div(class="col-lg-12")
+                    h1(class="page-header") Aluno <small> #{aluno.nomeCompleto} <strong>Matricula:</strong> #{aluno.codMatricula}</small>
+            .row
+                .row
+                    p                                       
+                        a.btn.btn-default(href='/alunos/'+aluno._id+'/atualizar') Atualizar dados
+                        a.btn.btn-default(href='/alunos/'+aluno._id+'/mostrarmedicos') Dados Médicos
+                        a.btn.btn-default(href='/alunos/'+aluno._id+'/responsavel/lista') Responsáveis
+                        a.btn.btn-default(href='/turmas/matricular/'+aluno._id) Matricular        
+                        a.btn.btn-default(href='/alunos/vinculo/'+aluno._id) Vínculo      
+                        button.btn.btn-default(type="button" onClick="PrintElem()")
+                            span(class="glyphicon glyphicon-print" aria-hidden="true")
+                .row
+                    .col-md-2
+                            div.panel.panel-default
+                                div.panel-heading
+                                    h4 FOTO PERFIL
+                                div.panel-body
+                                    img(src="data:image/jpeg;base64,"+aluno.foto alt="foto" height="100%" width="100%")
+                                    a.btn.btn-primary.btn-block(href='/alunos/#{aluno._id}/atualizar/foto') Atualizar Foto        
+                    .col-md-offset-1.col-md-6
+                        .panel.panel-default#conteudo1
+                            div.panel-heading
+                                h4 DADOS PESSOAIS
+                            div.panel-body
+                                .col-md-12
+                                    table.table.table-striped
+                                        tr
+                                            th Data de Nascimento:
+                                            td #{prettyDate(aluno.dataNascimento)}
+                                        tr
+                                            th Nome da Mãe:
+                                            td  #{aluno.nomeMae}
+                                        tr
+                                            th Nome do Pai:
+                                            td  #{aluno.nomePai}
+                                        tr
+                                            th CPF:
+                                            td  #{aluno.cpf}
+                                        tr
+                                            th Email:
+                                            td  #{aluno.email}
+                                        
+                                        tr
+                                            th Religião:
+                                            td #{aluno.religiao}
+                                        tr
+                                            th RG:
+                                            td #{aluno.rg}
+                                        tr
+                                            th Naturalidade:
+                                            td #{aluno.naturalidade}
+                                        tr                                
+                                            th Nacionalidade:
+                                            td #{aluno.nacionalidade}
+                                        tr
+                                            th Tipo sanguineo:
+                                            td #{aluno.tipoSanguineo}
+                                        tr
+                                            th Sexo:
+                                            td #{aluno.sexo}
+                                        tr
+                                            th Celular:
+                                            td #{aluno.celular}
+                                        tr
+                                            th Telefone fixo:
+                                            td #{aluno.foneFixo}
+                                        tr
+                                            th Outro telefone:
+                                            td #{aluno.foneOutro}
+                                        
+                                        tr
+                                            th Observações:
+                                            td #{aluno.observacao}
+                        
+                    .row
+                        .col-md-offset-3.col-md-6
+                            .panel.panel-default#conteudo2
+                                div.panel-heading
+                                    h4 ENDEREÇO
+                                div.panel-body
+                                    .col-md-12
+                                        table.table.table-striped
+                                        
+                                            tr
+                                                th CEP:
+                                                td #{aluno.cep}
+                                            tr
+                                                th Endereco:
+                                                td #{aluno.endereco}
+                                            tr 
+                                                th Número:
+                                                td #{aluno.numero}
+                                            tr                        
+                                                th Complemento:
+                                                td #{aluno.complemento}
+                                            tr
+                                                th Bairro:
+                                                td #{aluno.bairro}
+                                            tr
+                                                th Cidade:
+                                                td #{aluno.cidade}
+                                            tr
+                                                th UF:
+                                                td #{aluno.uf}
+    script.
+        function PrintElem(){
+            var mywindow = window.open('', 'PRINT', 'height=600,width=800');
+            mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+            mywindow.document.write('<style>table, th, td {font-family: arial, sans-serif;border: 1px solid black;border-collapse: collapse;}th, td { padding: 5px; text-align: left;}</style>');         
+            mywindow.document.write('</head><body >');
+            mywindow.document.write('<h1>' + document.title  + '</h1>');            
+            mywindow.document.write(document.getElementById('conteudo').innerHTML);
+            mywindow.document.write(document.getElementById('conteudo1').innerHTML);
+            mywindow.document.write(document.getElementById('conteudo2').innerHTML);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+            mywindow.print();
+            mywindow.close();
+            return true;
+        }

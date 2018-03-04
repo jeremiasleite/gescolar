@@ -1,0 +1,217 @@
+extends ../layout
+
+block content
+    script(src="/javascripts/validaAluno.js")
+    script.
+        $(document).ready(function(){
+            $(function() {
+                //$('.<a href="http://www.jqueryscript.net/time-clock/">date</a>').mask('99/99/9999');
+                $('.time').mask('99:99:99');
+                $('.data').mask('99/99/9999');
+                $('.date_time').mask('99/99/9999 99:99:99');
+                $('.cep').mask('99999-999');
+                $('.phone').mask('9999-9999');
+                $('.phone_with_ddd9').mask('(99) 99999-9999');
+                $('.phone_with_ddd_fixo').mask('(99) 9999-9999');
+                $('.phone_us').mask('(999) 999-9999');
+                $('.mixed').mask('AAA 000-S0S');
+
+                $('.cep_with_callback').mask('00000-000', {onComplete: function(cep) {
+                    console.log('Mask is done!:', cep);
+                },
+                onKeyPress: function(cep, event, currentField, options){
+                    console.log('An key was pressed!:', cep, ' event: ', event, 'currentField: ', currentField.attr('class'), ' options: ', options);
+                }
+                });
+
+                $('.crazy_cep').mask('00000-000', {onKeyPress: function(cep){
+                var masks = ['00000-000', '0-00-00-00'];
+                    mask = (cep.length>7) ? masks[1] : masks[0];
+                $('.crazy_cep').mask(mask, this);
+                }});
+
+                $('.cpf').mask('999.999.999-99', {reverse: true});
+                $('.money').mask('000.000.000.000.000,00', {reverse: true});
+
+                var SaoPauloCelphoneMask = function(phone, e, currentField, options){
+                return phone.match(/^(\(?11\)? ?9(5[0-9]|6[0-9]|7[01234569]|8[0-9]|9[0-9])[0-9]{1})/g) ? '(00) 00000-0000' : '(00) 0000-0000';
+                };
+
+                $(".celphones_sp").mask(SaoPauloCelphoneMask, { onKeyPress: function(phone, e, currentField, options){
+                $(currentField).mask(SaoPauloCelphoneMask(phone), options);
+                }});
+
+            });
+        })
+    div(id="page-wrapper")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="col-lg-12")
+                        h1(class="page-header") Cadastrar Aluno
+                .row
+                    - if (messages.info)
+                        .message.info.m_esquerda_direita
+                            span.alert.alert-danger= messages.info
+                    br        
+                    form.form-horizontal(method="POST" action="/alunos/cadastrar" name="cadastrarAluno")       
+                        .col-md-6                 
+                                div.panel.panel-default
+                                    div.panel-heading
+                                        h4 DADOS PESSOAIS
+                                    div.panel-body(style="padding: 20px;")                        
+                                        .col-md-12
+                                            .form-group#group_nome
+                                                label.col-md-4(for='nomeCompleto') Nome do Aluno:<span class="necessary-field">*</span>
+                                                .col-md-8
+                                                    input.input-sm#nomeCompleto.form-control(type='text', name='nomeCompleto', maxlength='50', required='', value=aluno.nomeCompleto autofocus)
+                                            .form-group#group_nome_mae
+                                                label.col-md-4(for='nomeMae') Nome da Mãe:<span class="necessary-field">*</span>
+                                                .col-md-8
+                                                    input.input-sm#nomeMae.form-control(type='text', name='nomeMae', maxlength='50', required='', value=aluno.nomeMae)
+                                            .form-group#group_nome_pai
+                                                label.col-md-4(for='nomePai') Nome da Pai:<span class="necessary-field">*</span>
+                                                .col-md-8
+                                                    input.input-sm#nomePai.form-control(type='text', name='nomePai', maxlength='50', required='', value=aluno.nomePai)        
+                                            .form-group
+                                                label.col-md-4(for='dataNascimento') Data de Nascimento:<span class="necessary-field">*</span>
+                                                .col-md-8
+                                                    input.input-sm.form-control.data(type="text" id="dataNascimento" name='dataNascimento' value= aluno.dataNascimento required)                            
+                                            .form-group#group_cpf
+                                                label.col-md-4(for='cpf') CPF:<span class="necessary-field">*</span>
+                                                .col-md-8
+                                                    input.input-sm#cpf.form-control.cpf(type='text', name='cpf', maxlength='', value=aluno.cpf)
+                                            .form-group
+                                                label.col-md-4(for='rg') RG:<span class="necessary-field">*</span>
+                                                .col-md-8
+                                                    input.input-sm#rg.form-control(type='text', name='rg' maxlength='15', value=aluno.rg)
+                                            .form-group
+                                                label.col-md-4(for='email') Email:
+                                                .col-md-8
+                                                    input.input-sm#email.form-control(type='email', name='email' maxlength='50', value=aluno.email)
+                                            .form-group
+                                                label.col-md-4(for='Naturalidade') Naturalidade:
+                                                .col-md-8
+                                                    input.input-sm#naturalidade.form-control(type='text', name='naturalidade' maxlength='30', value=aluno.naturalidade)
+                                            .form-group
+                                                label.col-md-4(for='nacionalidade') Nacionalidade:
+                                                .col-md-8
+                                                    input.input-sm#nacionalidade.form-control(type='text', name='nacionalidade', maxlength='30', value=aluno.nacionalidade)
+                                            .form-group
+                                                label.col-md-4(for='tipoSanguineo') Tipo Sanguineo:
+                                                .col-md-8
+                                                    select.input-sm#tipoSanguineo.form-control(name='tipoSanguineo', required='')
+                                                        option(value='', selected=!aluno)
+                                                        option(value='A+' selected='A+'== aluno.tipoSanguineo) A+
+                                                        option(value='A-' selected='A-'== aluno.tipoSanguineo) A-
+                                                        option(value='B+' selected='B+'== aluno.tipoSanguineo) B+
+                                                        option(value='B-' selected='B-'== aluno.tipoSanguineo) B-
+                                                        option(value='O+' selected='O+'== aluno.tipoSanguineo) O+
+                                                        option(value='O-' selected='O-'== aluno.tipoSanguineo) O-
+                                                        option(value='AB+' selected='AB+'== aluno.tipoSanguineo) AB+
+                                                        option(value='AB-' selected='AB-'== aluno.tipoSanguineo) AB-
+                                            .form-group
+                                                label.col-md-4(for='sexo') Sexo:
+                                                .col-md-8
+                                                    select.input-sm#sexo.form-control(name='sexo')
+                                                        option(value='', selected=!aluno) -
+                                                        option(value='M' selected='M'== aluno.sexo) M
+                                                        option(value='F' selected='F'== aluno.sexo) F
+                                            .form-group
+                                                label.col-md-4(for='celular') Celular:
+                                                .col-md-8
+                                                    input.input-sm#celular.form-control.phone_with_ddd9(type='text', name='celular', maxlength='16', value=aluno.celular)
+                                            .form-group
+                                                label.col-md-4(for='fixo') Fone Fixo:
+                                                .col-md-8
+                                                    input.input-sm#fixo.form-control.phone_with_ddd_fixo(type='text', name='foneFixo', maxlength='16', value=aluno.foneFixo)
+                                            .form-group
+                                                label.col-md-4(for='foneOutro') Outro celular:
+                                                .col-md-8
+                                                    input.input-sm#foneOutro.form-control.phone_with_ddd9(type='text', name='foneOutro', maxlength='16', value=aluno.foneOutro)
+                                            .form-group
+                                                label.col-md-4(for='religiao') Religiao:
+                                                .col-md-8
+                                                    input.input-sm#religiao.form-control(type='text', name='religiao', maxlength='16', value=aluno.religiao)
+                                            .form-group
+                                                label.col-md-4(for='observacao') Observação:
+                                                .col-md-8
+                                                    textarea.input-sm.form-control(row="2" name="observacao") #{aluno.observacao}
+                        .col-md-6                                 
+                            div.panel.panel-default
+                                div.panel-heading
+                                    h4 ENDEREÇO
+                                div.panel-body
+                                    
+                                    .col-md-12
+                                        .form-group#group_cep
+                                            label.col-md-4(for='cep') CEP:
+                                            .col-md-6
+                                                input.input-sm#cep.form-control.cep(type='text', name='cep' maxlength='', value=aluno.cep)
+                                            .col-md-2
+                                                input.btn-sm#Buscar.btn.btn-default(type='button', value='Buscar' disabled)          
+                                        .form-group
+                                            label.col-md-4(for='endereco') Endere&ccedil;o:
+                                            .col-md-8
+                                                input.input-sm#endereco.form-control(type='text', name='endereco' required='', maxlength='50', value=aluno.endereco)
+                                        .form-group
+                                            label.col-md-4(for='numero') N&uacute;mero:
+                                            .col-md-8
+                                                input.input-sm#numero.form-control(type='text', name='numero', required='', value=aluno.numero)
+                                        .form-group
+                                            label.col-md-4(for='complemento') Complemento:
+                                            .col-md-8
+                                                input.input-sm#complemento.form-control(type='text', name='complemento', maxlength='50', value=aluno.complemento)
+                                        .form-group
+                                            label.col-md-4(for='bairro') Bairro:
+                                            .col-md-8
+                                                input.input-sm#bairro.form-control(type='text', name='bairro', maxlength='30', required='', value=aluno.bairro)
+                                        .form-group
+                                            label.col-md-4(for='cidade') Cidade:
+                                            .col-md-8
+                                                input.input-sm#cidade.form-control(type='text', name='cidade', maxlength='30', required='', value=aluno.cidade)
+                                        .form-group
+                                            label.col-md-4(for='uf') UF:
+                                            .col-md-8
+                                                select.input-sm#uf.form-control(name='uf', required='')
+                                                    option(value='' selected= !aluno) Selecione
+                                                    option(value='AC' selected='AC'== aluno.uf) Acre
+                                                    option(value='AL' selected='AL'== aluno.uf) Alagoas
+                                                    option(value='AP' selected='AP'== aluno.uf) Amap&aacute;
+                                                    option(value='AM' selected='AM'== aluno.uf) Amazonas
+                                                    option(value='BA' selected='BA'== aluno.uf) Bahia
+                                                    option(value='CE' selected='CE'== aluno.uf) Cear&aacute;
+                                                    option(value='DF' selected='DF'== aluno.uf) Distrito Federal
+                                                    option(value='ES' selected='ES'== aluno.uf) Espirito Santo
+                                                    option(value='GO' selected='GO'== aluno.uf) Goi&aacute;s
+                                                    option(value='MA' selected='MA'== aluno.uf) Maranh&atilde;o
+                                                    option(value='MS' selected='MS'== aluno.uf) Mato Grosso do Sul
+                                                    option(value='MT' selected='MT'== aluno.uf) Mato Grosso
+                                                    option(value='MG' selected='MG'== aluno.uf) Minas Gerais
+                                                    option(value='PA' selected='PA'== aluno.uf) Par&aacute;
+                                                    option(value='PB' selected='PB'== aluno.uf) Para&iacute;ba
+                                                    option(value='PR' selected='PR'== aluno.uf) Paran&aacute;
+                                                    option(value='PE' selected='PE'== aluno.uf) Pernambuco
+                                                    option(value='PI' selected='PI'== aluno.uf) Piau&iacute;
+                                                    option(value='RJ' selected='RJ'== aluno.uf) Rio de Janeiro
+                                                    option(value='RN' selected='RN'== aluno.uf) Rio Grande do Norte
+                                                    option(value='RS' selected='RS'== aluno.uf) Rio Grande do Sul
+                                                    option(value='RO' selected='RO'== aluno.uf) Rond&ocirc;nia
+                                                    option(value='RR' selected='RR'== aluno.uf) Roraima
+                                                    option(value='SC' selected='SC'== aluno.uf) Santa Catarina
+                                                    option(value='SP' selected='SP'== aluno.uf) S&atilde;o Paulo
+                                                    option(value='SE' selected='SE'== aluno.uf) Sergipe
+                                                    option(value='TO' selected='TO'== aluno.uf) Tocantins        
+                            input.btn.btn-success.m_esquerda_direita(type='button', value='Cadastrar' id='btn_submit')
+    script.
+        $(function() {
+            $( "#dataNascimento" ).datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+            });
+        });

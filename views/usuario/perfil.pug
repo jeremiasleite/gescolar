@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+    -function prettyDate(dateString){
+        //if it's already a date object and not a string you don't need this line:
+        -var date = new Date(dateString);
+        -var d = date.getDate();
+        -var monthNames = [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho","Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ];
+        -var m = monthNames[date.getMonth()];
+        -var y = date.getFullYear();
+        -return d+' '+m+' '+y;
+    -}
+    div(id="page-wrapper")
+        div(class="container-fluid")
+            div(class="row")
+                div(class="col-lg-12")
+                    h1(class="page-header") Perfil do Usuário <small> #{user.nome} </small>
+            .row
+                .col-md-4
+
+                .col-md-4
+                    .m_esquerda_direita
+                        a.btn.btn-link(href='/users/atualizar/senha') Alterar Senha
+                        a.btn.btn-link(href='/users/atualizar/'+user._id) Editar Perfil
+                        table.table.table-striped
+                            tr
+                                th Username:
+                                td #{user.username}
+                            tr
+                                th Tipo de Usuário:
+                                if user.tipoUser == '0'
+                                    td Administrador
+                                else if user.tipoUser == '1'
+                                    td  Gestor
+                                else if user.tipoUser == '2'
+                                    td  Secretário
+                                else
+                                    td  Professor
+                            tr
+                                th Email:
+                                td #{user.email}
+                            tr
+                                th CPF:
+                                td #{user.cpf}
+                            tr
+                                th Status:
+                                td #{user.status}
+                            tr
+                                th Data de Cadastro:
+                                td #{prettyDate(user.dataCadastro)}
+            .row                          
+                nav
+                    ul.pager
+                        li
+                            a(href='/') Voltar           

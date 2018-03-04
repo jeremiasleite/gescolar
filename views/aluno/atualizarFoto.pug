@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    div(id="page-wrapper")
+        div(class="container-fluid")
+            div(class="row")
+                div(class="col-lg-12")
+                    h1(class="page-header") Aluno <small> #{aluno.nomeCompleto} <strong>Matricula:</strong> #{aluno.codMatricula}</small>
+            .row
+                .col-md-3
+                    a.btn.btn-primary.btn-block(href='/alunos/'+aluno._id+'/atualizar/foto/uploadfotopc') Escolher uma foto da galeria
+                .col-md-3
+                    a.btn.btn-primary.btn-block(href='/alunos/'+aluno._id+'/atualizar/foto/uploadfotowebcam') Tirar foto pela webcam
+            nav
+                ul.pager
+                    li
+                        a(href='/alunos/buscar/#{aluno._id}') Voltar

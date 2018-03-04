@@ -1,0 +1,89 @@
+extends ../layout
+
+block content
+    -function prettyDate(dateString){
+        -var date = new Date(dateString);
+        -var d = date.getDate();
+        -if(d<10){
+            -d = '0' + d
+        -}
+        -var m = date.getMonth()+1;
+        -if(m<10){
+            -m = '0' + m
+        -}
+        -var y = date.getFullYear();
+        -return d+'/'+ m +'/'+y;
+    -}
+    div(id="page-wrapper")
+        div(class="container-fluid")
+            div(class="row")
+                div(class="col-lg-12")
+                    h1(class="page-header") Usuários            
+    
+            .row
+                a.col-md-2(class="btn btn-primary", href='/users/cadastrar') Cadastrar Usuário
+            br                
+            .rom
+                table#dataTables-example.table.table-striped.table-bordered.table-hover.display(width='100%' cellspacing="0")
+                    thead
+                        tr
+                            th #
+                            th Nome:
+                            th Username:
+                            th Tipo:
+                            th Email:
+                            th CPF:
+                            th Data Cadastro:
+                            th Status:                    
+                            th Editar:
+                            th Excluir:
+                    tbody
+                        each valor, i in users
+                            tr
+                                td #{i + 1}
+                                td #{valor.nome}
+                                td #{valor.username}
+                                if valor.tipoUser == '0'
+                                    td Administrador
+                                else if valor.tipoUser == '1'
+                                    td  Gestor
+                                else if valor.tipoUser == '2'
+                                    td  Secretário
+                                else
+                                    td  Professor
+                                td #{valor.email}
+                                td #{valor.cpf}
+                                td #{prettyDate(valor.dataCadastro)}
+                                td
+                                    form(method="POST" action='/users/atualizarstatus/'+valor._id+'?_method=PUT')
+                                        label.switch
+                                            input(type='checkbox' name="status" checked=(valor.status === "Ativo" ? "checked" : undefined) onclick="this.form.submit();")
+                                            .slider.round
+                                
+                                td
+                                    a(class='btn btn-info', href='/users/atualizar/'+valor._id) Editar
+                                td
+                                    a(class='btn btn-danger', href='/users/excluir/'+valor._id) Excluir
+
+            
+            nav
+                ul.pager
+                    li
+                        a(href='/') Voltar
+        
+    script(type="text/javascript").
+        
+        $(document).ready(function() {
+            $('#dataTables-example').DataTable({
+                responsive: true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ Usuários",
+                    "zeroRecords": "Nenhum usuário encontrado!",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No records available",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "search" : "Pesquisar ",
+                    "paginate" : {"next": "Próxima", "previous": "Anterior"}
+                }                
+            });            
+        });

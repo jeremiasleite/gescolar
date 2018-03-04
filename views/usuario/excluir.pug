@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+    div(id="page-wrapper")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="col-lg-12")
+                        h1(class="page-header") Excluir Usuário <small>#{user.username}</small>
+                .row
+                    .col-md-6.col-md-offset-3
+                        .panel.panel-danger
+                            .panel-heading 
+                                h4 Deseja excluir o usuário <strong>#{user.username}</strong>?
+                            .panel-body
+                                .row
+                                    .col-md-2
+                                        form(action="/users/excluir/"+user._id method="POST")
+                                            input.btn.btn-danger(type="submit" value="Excluir")
+                                    .col-md-2 
+                                        a.btn.btn-default(href="/users") Cancelar
+
+                        

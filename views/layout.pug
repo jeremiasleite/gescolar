@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    title= title
+    //link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')    
+    // Bootstrap Core CSS
+    link(href='/lib/bootstrap/css/bootstrap.css', rel='stylesheet')
+    // MetisMenu CSS
+    link(href='/lib/metisMenu/metisMenu.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='/stylesheets/sb-admin-2.css', rel='stylesheet')
+    link(href='/lib/jquery/jquery-ui.css' rel='stylesheet')
+
+    link(href='/stylesheets/checkbox_switch.css', rel='stylesheet')
+    link(rel="stylesheet" type="text/css" href="/lib/sweetalert/sweetalert.css")
+    
+    // Morris Charts CSS
+    link(href='/lib/morrisjs/morris.css', rel='stylesheet')
+
+    // Custom Fonts
+    link(href='/lib/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    
+    //Bootstrap 3 Datepicker
+    link(rel="stylesheet" href="/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css")
+
+    script(src='/lib/jquery/jquery.min.js')
+    script(src="/lib/moment/moment-with-locales.js")
+    script(src='/lib/jquery/jquery-ui.js')
+    script(src='/lib/jquery/jquery.mask.min.js')
+    script(src='/lib/jquery/jquery-numeric.js')
+    script(src='/lib/moment/locales.js')
+    script(src="/lib/sweetalert/sweetalert.min.js")
+  body
+    
+    #wrapper
+      
+      include ./includes/navbar.pug
+      include ./includes/sidebar.pug        
+      block content  
+    script(src='/lib/bootstrap/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='/lib/metisMenu/metisMenu.min.js')
+    // Morris Charts JavaScript
+    script(src='/lib/raphael/raphael.min.js')
+    
+    
+    // Custom Theme JavaScript
+    script(src='/javascripts/sb-admin-2.js')
+    script(charset="utf8" src='/lib/datatables/js/jquery.dataTables.min.js')
+    script(src='/lib/datatables-plugins/dataTables.bootstrap.min.js')
+    script(charset="utf8" src='/lib/datatables-responsive/dataTables.responsive.js')
+    
+    script(type="text/javascript" src="/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js")
+
+    
+    

@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+    div(id="page-wrapper")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="col-lg-12")
+                        h1(class="page-header") Cadastrar Usuário
+                .row
+                    .col-md-6.col-md-offset-3
+                        form.form-horizontal(method="POST" action="/users/cadastrar")
+                            div(class="form-group")
+                                label.col-sm-2.control-label(for="nome") Nome:
+                                .col-sm-10
+                                    input(type="text" id="nome" name="nome" class="form-control")
+                            div(class="form-group")
+                                label.col-sm-2.control-label(for="usename") Username:
+                                .col-sm-10
+                                    input(type="text" id="username" name="username" class="form-control")        
+                            div(class="form-group")
+                                label.col-sm-2.control-label(for="cpf") CPF:
+                                .col-sm-10
+                                    input(type="text" id="cpf" name="cpf" class="form-control")
+                            .form-group
+                                label.col-sm-2.control-label Tipo de Usuário
+                                .col-sm-10
+                                    select#tipoUser.form-control(name="tipoUser")
+                                        option(value='0') Administrador
+                                        option(value='1') Gestor
+                                        option(value='2') Secretário
+                                        option(value='3') Professor
+                            div(class="form-group")
+                                label.col-sm-2.control-label(for="email") Email:
+                                .col-sm-10
+                                    input(type="email" id="email" name="email" class="form-control")
+                            div(class="form-group")
+                                label.col-sm-2.control-label(for="senha") Senha:
+                                .col-sm-10
+                                    input(type="password" id="senha" name="password" class="form-control")
+
+                            div(class="form-group")
+                                label.col-sm-2.control-label(for="reSenha") Repitir Senha:
+                                .col-sm-10
+                                    input(type="password" id="reSenha" name="rePassword" class="form-control")
+                            .form-group
+                                .col-sm-offset-2.col-sm-10
+                                    input(type="submit" class="btn btn-success" value="Cadastrar")
+
+
+                        nav
+                            ul.pager
+                                li
+                                    a(href='/users') Voltar

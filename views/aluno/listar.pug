@@ -1,0 +1,63 @@
+extends ../layout
+
+block content
+    -function prettyDate(dateString){
+        -var date = new Date(dateString);
+        -var d = date.getDate();
+        -if(d<10){
+            -d = '0' + d
+        -}
+        -var m = date.getMonth()+1;
+        -if(m<10){
+            -m = '0' + m
+        -}
+        -var y = date.getFullYear();
+        -return d+'/'+ m +'/'+y;
+    -}
+    div(id="page-wrapper")
+        div(class="container-fluid")
+            div(class="row")
+                div(class="col-lg-12")
+                    h1(class="page-header") Alunos Encontrados
+            .row
+                div(class="panel panel-default m_esquerda_direita")
+        
+                    div(class="panel-body")
+                        table(class="table table-striped tabela_centro")
+                            thead
+                                tr
+                                    th #
+                                    th Foto:
+                                    th Nome:
+                                    th Matricula:
+                                    th CPF:
+                                    th Data de Nascimento:
+                                    th Celular:
+                                    th Email:
+                                    th Abrir
+                                    th Matricular:
+                                    th Vinculo:
+                            tbody
+                                each valor, i in alunos
+                                    tr
+                                        td #{i+1}
+                                        td
+                                            img(src="data:image/jpeg;base64,"+valor.foto alt=valor.nomeCompleto height="50" width="50" style="border-radius: 50%")
+                                        td
+                                            a(href='/alunos/'+valor._id+'/perfil') #{valor.nomeCompleto}
+                                        td #{valor.codMatricula}
+                                        td #{valor.cpf}
+                                        td #{prettyDate(valor.dataNascimento)}
+                                        td #{valor.celular}
+                                        td #{valor.email}
+                                        td
+                                            a.btn.btn-default(href='/alunos/'+valor._id+'/perfil')
+                                                span(class="glyphicon glyphicon-zoom-in" aria-hidden="true")
+                                        td
+                                            a.btn.btn-default(href='/turmas/matricular/'+valor._id) Matricular
+                                        td
+                                            a.btn.btn-default(href='/alunos/vinculo/'+valor._id) Vinculo
+            nav
+                ul.pager
+                    li
+                        a(href='/alunos/buscar') Voltar

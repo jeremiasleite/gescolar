@@ -1,0 +1,61 @@
+extends ../../layout
+
+block content
+    div(id="page-wrapper")
+        div(class="container-fluid")
+            div(class="row")
+                div(class="col-lg-12")
+                    h1(class="page-header") Cadastrar Novo Recebimento
+            .row
+                div.panel.panel-default
+                    div.panel-heading
+                        h4 DADOS DE RECEBIMENTO
+                    div.panel-body                        
+                        .row
+                            .col-lg-6
+                                .form-group
+                                    label(for='codigo') Código:<span class="necessary-field">*</span>
+                                    input.input-sm#codigo.form-control(type='text', name='codigo', maxlength='50', required='', value='' autofocus)
+                                .form-group
+                                    label(for='dataVencimento') Data de Vencimento:<span class="necessary-field">*</span>
+                                    #dataVencimento.input-group.date
+                                        input.form-control(type='text' name="dataVencimento")
+                                        span.input-group-addon
+                                            span.glyphicon.glyphicon-calendar
+                                .form-group
+                                    label(for='cliente') cliente:<span class="necessary-field">*</span>
+                                    input.input-sm.form-control(type='text', name='cliente', maxlength='50', required='', value='')
+                                .form-group
+                                    label(for='dataLancamento') Data de Lançamento:<span class="necessary-field">*</span>
+                                    input.input-sm.form-control(type='text', name='dataLancamento', maxlength='50', required='', value='')
+                                .form-group
+                                    label Plano de Contas
+                                    select(class="form-control input-sm")
+                                        option Mensalidade
+                                        option Material
+                                        option Curso Extra
+                                        option Esporte
+                                        option Apostila
+                                        option Livro 
+                                                
+                            .col-lg-6  
+                                .form-group
+                                    label(for='descricao') Descrição:<span class="necessary-field">*</span>
+                                    input.input-sm.form-control(type='text', name='descricao', maxlength='50', required='', value='')
+                                .form-group
+                                    label(for='numBolelo') Número do Boleto:<span class="necessary-field">*</span>
+                                    input.input-sm.form-control(type='text', name='numBolelo', maxlength='50', required='', value='')
+                                .form-group
+                                    label(for='valor') Valor:<span class="necessary-field">*</span>
+                                    input.input-sm.form-control(type='text', name='Valor', maxlength='50', required='', value='')
+                                .form-group
+                                    label(for='status') Status:<span class="necessary-field">*</span>
+                                    input.input-sm.form-control(type='text', name='status', maxlength='50', required='', value='')
+                        button(type="submit" class="btn btn-default") Cadastrar Novo Recebimento
+        script(type='text/javascript').
+            $(function () {
+                $('#dataVencimento').datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    locale: 'pt-br'
+                });
+            });

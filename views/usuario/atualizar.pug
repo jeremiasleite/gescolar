@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    div(id="page-wrapper")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="col-lg-12")
+                        h1(class="page-header") Cadastrar Usuário
+                .row
+                    .col-md-6.col-md-offset-3
+                        form(method="POST" action='/users/atualizar/'+user._id)
+                            div(class="form-group")
+                                label(for="nome") Nome:
+                                input(type="text" id="nome" name="nome" class="form-control" value=user.nome required=true)
+                            div(class="form-group")
+                                label(for="username") Username:
+                                input(type="text" id="username" name="username" class="form-control" value=user.username required=true)
+                            div(class="form-group")
+                                label(for="email") Email:
+                                input(type="email" id="email" name="email" class="form-control" value=user.email required=true)
+                            div(class="form-group")    
+                                label(for="cpf") CPF:
+                                input(type="text" id="cpf" name="cpf" class="form-control" value=user.cpf required=true)           
+                            
+                            label(for="tipoUser") Tipo do Usuário:
+                            select#tipoUser.form-control(name="tipoUser" value=user.tipoUser required=true)                
+                                option(value='0' selected='0'== user.tipoUser) Administrador
+                                option(value='1' selected='1'== user.tipoUser) Gestor
+                                option(value='2' selected='2'== user.tipoUser) Secretário
+                                option(value='3' selected='3'== user.tipoUser) Professor
+                            br
+                            input(type="submit" class="btn btn-success" value="Salva")        
+            nav
+                ul.pager
+                    li
+                        a(href='/users') Voltar
